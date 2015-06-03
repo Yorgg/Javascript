@@ -1,0 +1,47 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Calculator (only addition)</title>
+<link rel="stylesheet" href="stylesheet.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="logic.js"></script>
+</head>
+
+<body>
+    <div id="display">0</div>
+  	<section class= keypad>
+		<div> 
+    		<button onclick='operator("add")'>+</button> 
+    		<button onclick='calculate()'>=</button> 
+    		<button onclick='erase()'>Clear</button> 
+		</div><br>
+ 
+		<div>
+    		<button onclick='num(1)'>1</button> 
+    		<button onclick='num(2)'>2</button>
+    		<button onclick='num(3)'>3</button>
+		</div>
+
+		<div> 
+    		<button onclick='num(4)'>4</button> 
+    		<button onclick='num(5)'>5</button> 
+    		<button onclick='num(6)'>6</button>
+		</div>
+
+		<div> 
+    		<button onclick='num(7)'>7</button> 
+    		<button onclick='num(8)'>8</button> 
+    		<button onclick='num(9)'>9</button>
+		</div>
+	</div>
+</section>
+
+  <footer>
+    <p>Simple calculator created by <a href="https://github.com/yorgg" target="_blank">@yorgg</a></p>
+    <p><a href="https://github.com/Jberczel/odin-javascript/tree/master/calculator" target="_blank">[Source Code]</a></p>
+  </footer>
+
+
+</body>
+</html> 
