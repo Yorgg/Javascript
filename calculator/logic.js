@@ -1,62 +1,52 @@
-var first_value = '',
-    operator_name = '',
-    second_value = '';
-   
-      
-$(document).ready(function() {
-    $(document).keypress( function(e) {
-     	var input = String.fromCharCode(e.which);
-    	
-    	if (e.which == '13') {
+var array = [];
+     
+$(document).ready(function() {  
+    //Checks if 'enter' and 'backspace' keys are pressed
+    $(document).keydown( function(e) { 
+        if (e.which == '13') {
             calculate();
-     	} else if (input == '+') {
-            operator_name = '+';
-            $("#display").html('+');
-        } else if (input == '-') {
-            operator_name = '-';
-            $("#display").html('-');
-        } else if (input == '/') {
-            operator_name = '/';
-            $("#display").html('/');
-        } else if (input == '%') {
-            operator_name = '%';
-            $("#display").html('%');
-        } else if (input == 'e') {
+        } else if (e.which == 8 || e.which == 46) {
+            popIt();
+            return false;
+        }
+    }); 
+
+    $(document).keypress( function(e) {   	
+
+        var input = String.fromCharCode(e.which);
+         
+     	if (input == 'c') {
             erase();
-        } else if (input == '*') {
-            operator_name = '*';
-            $("#display").html('*');
-        } else {
-            num(input);
+        } else if (e.which != 8 && e.which != 13)  {
+            pushIt(input);
         }
     }); 
 });
 
+ 
 function erase() {
-	first_value = '';
-    operator_name = '';
-    second_value = '';
+	array = [];
     $("#display").text('0');
 }
 
-function num(n) {
-	if (operator_name == '') { 
-	    first_value += '' + n;
-	    $("#display").text(first_value);
-  	} else {
- 		second_value += '' + n; 
- 	    $("#display").text(second_value);
- 	}
+function pushIt(n) {
+	array.push(n) 
+    $("#display").text(array.join(''));
+}
+
+function popIt(n){
+	array.pop()
+    $("#display").text(array.join(''));
 }
 
 function calculate() {
-	var calc = (eval(first_value + operator_name + second_value) + '');
-	$("#display").text(calc);
-	first_value = '';
-    operator_name = '';
-    second_value = '';
+    try {
+        eval(array.join('')); 
+    }
+    catch(e) {
+        $("#display").text('error');
+    }
+
+   $("#display").text(eval(array.join('')));
+    array = [];
 }
-
-  
-
- 
