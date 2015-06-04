@@ -1,45 +1,62 @@
 var first_value = '',
     operator_name = '',
-    second_value = '',
-    current_display = 0;
+    second_value = '';
+   
       
+$(document).ready(function() {
+    $(document).keypress( function(e) {
+     	var input = String.fromCharCode(e.which);
+    	
+    	if (e.which == '13') {
+            calculate();
+     	} else if (input == '+') {
+            operator_name = '+';
+            $("#display").html('+');
+        } else if (input == '-') {
+            operator_name = '-';
+            $("#display").html('-');
+        } else if (input == '/') {
+            operator_name = '/';
+            $("#display").html('/');
+        } else if (input == '%') {
+            operator_name = '%';
+            $("#display").html('%');
+        } else if (input == 'e') {
+            erase();
+        } else if (input == '*') {
+            operator_name = '*';
+            $("#display").html('*');
+        } else {
+            num(input);
+        }
+    }); 
+});
 
 function erase() {
 	first_value = '';
     operator_name = '';
-    second_value = '';''
-    $("#display").text(0);
-}
-
-function operator(name) {
-	if (first_value != '') {
-	    operator_name = name;
-	}
+    second_value = '';
+    $("#display").text('0');
 }
 
 function num(n) {
-	if (operator_name == '' && first_value.length < 8) { 
+	if (operator_name == '') { 
 	    first_value += '' + n;
 	    $("#display").text(first_value);
- 	} else {
+  	} else {
  		second_value += '' + n; 
  	    $("#display").text(second_value);
  	}
 }
 
 function calculate() {
-	window[operator_name]();
+	var calc = (eval(first_value + operator_name + second_value) + '');
+	$("#display").text(calc);
 	first_value = '';
     operator_name = '';
-    second_value = '';''
+    second_value = '';
 }
 
-function add() {
-    $("#display").text(parseInt(first_value) + parseInt(second_value));   
-}
-
-function showarray() {
-	console.log(array);
-}
+  
 
  
