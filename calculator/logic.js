@@ -1,28 +1,26 @@
 var array = [];
      
-$(document).ready(function() {  
-    //Checks if 'enter' and 'backspace' keys are pressed
-    $(document).keydown( function(e) { 
-        if (e.which == '13') {
+//Checks if 'enter' and 'backspace' keys are pressed
+$(document).keydown( function(e) { 
+    if (e.which == '13') {
             calculate();
-        } else if (e.which == 8 || e.which == 46) {
-            popIt();
-            return false;
-        }
-    }); 
+    } else if (e.which == 8 || e.which == 46) {
+        popIt();
+        return false;
+    }
+}); 
 
-    $(document).keypress( function(e) {   	
-
-        var input = String.fromCharCode(e.which);
+$(document).keypress( function(e) {   	
+    
+    var input = String.fromCharCode(e.which);
          
-     	if (input == 'c') {
-            erase();
-        } else if (e.which != 8 && e.which != 13)  {
-            pushIt(input);
-        }
-    }); 
-});
-
+    if (input == 'c') {
+        erase();
+    } else if (e.which != 8 && e.which != 13)  {
+        pushIt(input);
+    }
+}); 
+ 
  
 function erase() {
 	array = [];
