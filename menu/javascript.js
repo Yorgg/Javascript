@@ -8,7 +8,7 @@ $(document).ready( function() {
   $( "#home" ).append( "Home");
   $( "#menu" ).append( "Menu");
   $( "#contact" ).append( "Contact");
-   
+})
  
   $( "#home" ).click(function() {
   	$( ".content" ).empty();
@@ -24,7 +24,7 @@ $(document).ready( function() {
   	$( ".content" ).empty();
     $( ".content" ).append( "<p>address: 345 Evergreen Terrace<p><p>phone number not included, due to prank calls</p>" );
   })
-})
+
 
  
  
