@@ -3,7 +3,7 @@ var array = [];
 //Checks if 'enter' and 'backspace' keys are pressed
 $(document).keydown( function(e) { 
     if (e.which == '13') {
-            calculate();
+        calculate();
     } else if (e.which == 8 || e.which == 46) {
         popIt();
         return false;
@@ -11,7 +11,6 @@ $(document).keydown( function(e) {
 }); 
 
 $(document).keypress( function(e) {   	
-    
     var input = String.fromCharCode(e.which);
          
     if (input == 'c') {
