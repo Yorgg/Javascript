@@ -1,0 +1,39 @@
+body {
+  background-color: #333;
+}
+
+h1 {
+  color: #ddd;
+  font-weight: 400;
+ }
+
+#start{
+  font-family: 'Inconsolata';
+
+}
+
+.container {
+  height: 500px;
+  width: 500px;
+  margin: 0 auto;
+  
+}
+
+.square {
+  width: 20px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  height: 20px;
+  margin: 0 5px 0 0;
+  padding: 0 0 0 0;
+  display: inline-block;
+  background-color: #ddd;
+}
+
+.snake {
+  background-color: green;
+}
+
+.fly {
+  background-color: black;
+}
