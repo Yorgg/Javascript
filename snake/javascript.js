@@ -15,9 +15,9 @@ function createInputGrid() {
   inputGrid.values = newGrid;
 }
 
-//snake object
+//snake object with initial coordinates and direction
 var snake = {
-  coordinates: [[2,9],[1,9]],
+  coordinates: [[2,9],[1,9],[0,9],[0,8],[0,7]], 
   speed: 100,
   direction: 'left'
 }
@@ -48,21 +48,36 @@ function addSnakeToGrid() {
 }
 
 //see if the snake is out of bounds! 
-function checkSnake() {
+function checkBoundry() {
   if (snake.coordinates[0][0] > 19 || snake.coordinates[0][1] > 19) {
-    alert('game over - snek is dead!')
+    alert('game over - snake is dead!')
   }
 
   if (snake.coordinates[0][0] < 0 || snake.coordinates[0][1] < 0) {
-    alert('game over - snek is dead!')
+    alert('game over - snake is dead!')
+  }
+}
+
+function checkSnake(y,x) {
+  if (inputGrid[y][x] === 'S'){
+    alert('game over - snake is dead!');
   }
 }
 
 function moveSnakeDown() {
-  //move the snake head!
-  snake.coordinates.unshift([(snake.coordinates[0][0]+1), snake.coordinates[0][1]]);
+
+  var yAxis = snake.coordinates[0][0]+1;
+  var xAxis = snake.coordinates[0][1];
   
-  //remove tail from inputGrid!
+  //see if invalid move
+  if (inputGrid.values[yAxis][xAxis] === 'S'){
+    alert('game over - snake is dead!');
+  }
+
+  //move the snake head
+  snake.coordinates.unshift([(yAxis), xAxis]);
+  
+  //remove tail from inputGrid
   var last = snake.coordinates.slice(-1)[0];
   inputGrid.values[last[0]][last[1]] = 0
 
@@ -153,9 +168,8 @@ function createKeyListener() {
 function runApp() {
   setInterval(function(){ 
     $( ".snake-board" ).empty();
-    //getDirection();
     moveSnake();
-    checkSnake();
+    checkBoundry();
     addSnakeToGrid();
     createReducedArray();
     outputReducedArray();
@@ -167,7 +181,7 @@ function runApp() {
 
 
 $(document).ready( function() { 
-  alert('hsss... hsss.... snek is hungry.')
+  alert('hsssssss... hsss.... snake is hungry.')
   createKeyListener();
   createInputGrid(); 
   runApp();
