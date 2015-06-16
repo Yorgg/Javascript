@@ -1,158 +1,149 @@
-//the multidimensional grid
-var inputGrid = {
-  values: []
-}
+var grid = [];
 
-//create an empty 20x20 multidimensional grid - default value 0 
-function createInputGrid() {
-  var newGrid = new Array(20);
-  for (var y = 0; y < 20; y++) {
+//create empty 20x20 multidimensional grid  
+function creategrid() {
+  var newGrid = new Array(10);
+  for (var y = 0; y < 10; y++) {
     newGrid[y] = [ 0, 0, 0, 0, 0,
                    0, 0, 0, 0, 0, 
                    0, 0, 0, 0, 0,
                    0, 0, 0, 0, 0 ];
   }
-  inputGrid.values = newGrid;
+  grid = newGrid;
 }
 
-//snake object with initial coordinates and direction
+//snake object with initial location on grid and direction
 var snake = {
-  coordinates: [[2,9],[1,9],[0,9],[0,8],[0,7]], 
-  speed: 100,
-  direction: 'left'
+  location: [[2,9],[1,9],[0,9]],  
+  speed: 110,  
+  direction: 'left',
+  collision: false,
+  score: 0
 }
 
 //look at current snake direction and move snake
 function moveSnake() {
   switch (snake.direction) {
   case 'down':
-    moveSnakeDown();
+    moveSnakeInDirection(1,0);
     break;
   case 'up':
-    moveSnakeUp();
+    moveSnakeInDirection(-1,0);
     break;
   case 'left':
-    moveSnakeLeft();
+    moveSnakeInDirection(0,-1);
     break;
   case 'right':
-    moveSnakeRight();
+    moveSnakeInDirection(0,1);
     break;
   }
 }
 
 //for each coordinate of snake, add it to the main grid
 function addSnakeToGrid() {
-  for (var b = 0; b < snake.coordinates.length; b++) {
-     inputGrid.values[snake.coordinates[b][0]][snake.coordinates[b][1]] = 'S';
+  for (var b = 0; b < snake.location.length; b++) {
+    grid[snake.location[b][0]][snake.location[b][1]] = 'S';
   }  
 }
 
-//see if the snake is out of bounds! 
-function checkBoundry() {
-  if (snake.coordinates[0][0] > 19 || snake.coordinates[0][1] > 19) {
-    alert('game over - snake is dead!')
-  }
-
-  if (snake.coordinates[0][0] < 0 || snake.coordinates[0][1] < 0) {
-    alert('game over - snake is dead!')
+//check if the snake is outside boundry
+function checkBoundry(y,x) {
+  if (snake.location[0][0]+y > 9 || snake.location[0][1]+x > 9) {
+    return (true);
+  } else if (snake.location[0][0]+y < 0 || snake.location[0][1]+x < 0) {
+    return (true);
   }
 }
 
-function checkSnake(y,x) {
-  if (inputGrid[y][x] === 'S'){
-    alert('game over - snake is dead!');
+function moveSnakeInDirection(y, x) {
+  var yAxis = snake.location[0][0] + y;
+  var xAxis = snake.location[0][1] + x;
+
+  //check for boundry collision
+  if (checkBoundry(y, x)) {
+    snake.collision = true;
+    return;
+  }
+
+  //check for snake collision 
+  if (grid[yAxis][xAxis] === 'S'){
+    snake.collision = true;
+    return;
+  }
+
+  //move the head of snake
+  snake.location.unshift([(yAxis), xAxis]);
+
+  //if no fly eaten, grid = 0 where snake tail was.
+  if (grid[yAxis][xAxis] !== 'F') {
+    var tail = snake.location.slice(-1)[0];
+    grid[tail[0]][tail[1]] = 0;
+    snake.location.pop(); //and remove tail from snake
+  } else {
+    addFlyToGrid(); 
+    snake.score += 10
   }
 }
 
-function moveSnakeDown() {
-
-  var yAxis = snake.coordinates[0][0]+1;
-  var xAxis = snake.coordinates[0][1];
-  
-  //see if invalid move
-  if (inputGrid.values[yAxis][xAxis] === 'S'){
-    alert('game over - snake is dead!');
-  }
-
-  //move the snake head
-  snake.coordinates.unshift([(yAxis), xAxis]);
-  
-  //remove tail from inputGrid
-  var last = snake.coordinates.slice(-1)[0];
-  inputGrid.values[last[0]][last[1]] = 0
-
-  //snip tail from coordinates
-  snake.coordinates.pop();
-}
-
-function moveSnakeUp() {
-  snake.coordinates.unshift([(snake.coordinates[0][0]-1), snake.coordinates[0][1]]);
-  var last = snake.coordinates.slice(-1)[0];
-  inputGrid.values[last[0]][last[1]] = 0
-  snake.coordinates.pop();
-}
-
-function moveSnakeLeft() {
-  snake.coordinates.unshift([(snake.coordinates[0][0]), snake.coordinates[0][1]-1]);
-  var last = snake.coordinates.slice(-1)[0];
-  inputGrid.values[last[0]][last[1]] = 0
-  snake.coordinates.pop();
-}
-
-function moveSnakeRight() {
-  snake.coordinates.unshift([(snake.coordinates[0][0]), snake.coordinates[0][1]+1]);
-  var last = snake.coordinates.slice(-1)[0];
-  inputGrid.values[last[0]][last[1]] = 0
-  snake.coordinates.pop();
-}
-
-//fly object
-var fly = {
-  coordinates: null
-}
-
-//generate random x,y coorindates for fly
 function addFlyToGrid() {
-  fly.coordinates = Math.floor((Math.random() * 400) + 0);
-  reducedArray.array[fly.coordinates] = 'F';
+  
+  //convert grid coordinates to numbers => [0,1,2,3,4,5..99]
+  // TO DO: move this elsewhere so it exists in a single place memory
+  var gridSquares = Array.apply(null, {length: 100}).map(Number.call, Number)
+
+  //convert the snakes coordinates to a number and map.
+  var snakeLocations = _.map(snake.location, function(num){ return ((num[0]*10)+(num[1])); })
+
+  //create list of all possible locations the fly can respawn 
+  var possibleFlyLocations = _.difference(gridSquares, snakeLocations);
+
+  //generate random index number for possibleFlyLocations
+  var randomIndex = Math.floor((Math.random() * (possibleFlyLocations.length-1)-0) + 0);
+  
+  //choose a value from possibleFlyLocations
+  var nextFlyCoordinate = possibleFlyLocations[randomIndex]
+  
+  //convert this back to grid coordinates and update grid with fly location
+  yFly = Math.floor(nextFlyCoordinate/10)
+  xFly = nextFlyCoordinate%10
+  grid[yFly][xFly] = 'F'
 }
 
-//grid values placed into one dimensional array (for later outputing)
-var reducedArray = {
+//Compress grid (to a one dimensional array) for appending
+var compressedGrid = {
   array: []
 }
 
-//variable to send out to window
+//String to be appended to HTML
 var out = {
-  toWindow: ''
+  toHTML: ''
 }
  
-//change grid value to div and send to out.toWindow
-function outputReducedArray() {
-  for (var square = 0; square < 400; square++) {
-    if (reducedArray.array[square] === 0) {
-      out.toWindow += '<div class="square"></div>';
-    } else if (reducedArray.array[square] === 'F') {
-      out.toWindow += '<div class="square fly"></div>';
-    } else if (reducedArray.array[square] === 'S') {
-      out.toWindow += '<div class="square snake"></div>';
+//parse compressedGrid  
+function outputcompressedGrid() {
+  for (var square = 0; square < 100; square++) {
+    if (compressedGrid.array[square] === 0) {
+      out.toHTML += '<div class="square"></div>';
+    } else if (compressedGrid.array[square] === 'F') {
+      out.toHTML += '<div class="square fly"></div>';
+    } else if (compressedGrid.array[square] === 'S') {
+      out.toHTML += '<div class="square snake"></div>';
     }
   }  
 }
 
-//populate reducedArray from inputGrid
-function createReducedArray() {
-  for (var y = 0; y < 20; y++) {
-    for (var x = 0; x < 20; x++) {
-      reducedArray.array.push(inputGrid.values[y][x]);
+//iterate over grid and populate compressedGrid
+function createcompressedGrid() {
+  for (var y = 0; y < 10; y++) {
+    for (var x = 0; x < 10; x++) {
+      compressedGrid.array.push(grid[y][x]);
     }
   }    
 }
 
 function createKeyListener() {
-  $(document).keypress( function(e) {     
+  $(document).keypress( function(e) {
     var input = String.fromCharCode(e.which);
-         
     if (input === 'w' && snake.direction !== 'down') {
       snake.direction = 'up';
     } else if (input === 's' && snake.direction !== 'up') {
@@ -162,28 +153,51 @@ function createKeyListener() {
     } else if (input === 'a' && snake.direction !== 'right') {
       snake.direction = 'left';
     }
-     
   }); 
 }
-function runApp() {
-  setInterval(function(){ 
-    $( ".snake-board" ).empty();
-    moveSnake();
-    checkBoundry();
-    addSnakeToGrid();
-    createReducedArray();
-    outputReducedArray();
-    $( ".snake-board" ).append(out.toWindow);
-    out.toWindow = '';
-    reducedArray.array = []; 
-  },snake.speed);
+
+function checkWin() {
+  if (snake.location.length === 100) {
+    return 'winner';
+  }
 }
 
+function runApp() {
+  var display = $( ".snake-board" )
+  creategrid();
+  addFlyToGrid();
 
-$(document).ready( function() { 
-  alert('hsssssss... hsss.... snake is hungry.')
+  setInterval(function(){ 
+    //reset board
+    display.empty();
+    out.toHTML = '';
+    compressedGrid.array = []; 
+     
+    //move snake and check for collision  
+    moveSnake();
+    if (snake.collision) {
+      display.append('game over <br>');
+      display.append('your score: ' + snake.score)
+      return;
+    }
+
+    addSnakeToGrid();
+
+    if (checkWin() === 'winner'){
+      display.append('<p>You are winner! </p>');
+      display.append('<p>Your score: ' + snake.score + '</p>');
+      return;
+    }
+
+    createcompressedGrid();
+    outputcompressedGrid();
+    display.append('<p class="score">  ' + snake.score + '</p>')
+    display.append(out.toHTML); //append grid to html file
+  }, snake.speed);
+}
+
+$(document).ready( function() {
   createKeyListener();
-  createInputGrid(); 
   runApp();
 })
  

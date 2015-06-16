@@ -3,28 +3,39 @@ body {
 }
 
 h1 {
-  color: #ddd;
-  font-weight: 400;
+  color: #fff;
+  font-size: 25px;
+  font-weight: 100;
   font-family: 'Inconsolata';
 }
 
-#start{
+p {
+  margin: 40px 0;
+  color: white;
   font-family: 'Inconsolata';
+}
 
+.score {
+  font-size: 50px;
+  margin-bottom: 10px;
+  color: #4ECDC4;
+}
+
+a {
+  color: #4ECDC4
 }
 
 .container {
-  height: 500px;
-  width: 500px;
+  height: 300px;
+  width: 300px;
   margin: 0 auto;
-  
 }
 
 .square {
-  width: 20px;
+  width: 25px;
   margin-bottom: 0px;
   padding-bottom: 0px;
-  height: 20px;
+  height: 25px;
   margin: 0 5px 0 0;
   padding: 0 0 0 0;
   display: inline-block;
@@ -32,9 +43,15 @@ h1 {
 }
 
 .snake {
-  background-color: green;
+  background-color: #556270;
 }
 
 .fly {
-  background-color: black;
+  background-color: #C44D58;
 }
+
+.snake-board {
+  color: white;
+  font-family: 'Inconsolata';
+}
+
