@@ -5,7 +5,8 @@ body {
 h1 {
   color: #ddd;
   font-weight: 400;
- }
+  font-family: 'Inconsolata';
+}
 
 #start{
   font-family: 'Inconsolata';
