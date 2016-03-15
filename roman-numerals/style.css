@@ -1,0 +1,113 @@
+body {
+  background-color: #ddd;
+}
+
+html {
+  font-family: helvetica;
+  font-size: 10px;
+  color: #E8175D;
+}
+
+
+/* media query */
+
+@media screen and (max-width: 900px) {
+  .input-holder, .results{
+  	width: 80%;
+  }
+}
+
+
+/* Containers */
+
+.container {
+  width: 100%;
+}
+
+.results {
+  width: 60%;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.input-holder {
+  width: 25%;
+  margin: 0 auto;
+}
+
+.header{
+  text-align: center;
+  margin-top: 0%;
+  padding: 20px;
+ }
+
+
+
+/*input, font styles, buttons */
+
+input {
+  width: 100%;
+  text-align: center;
+  height: 60px;
+  font-size: 4.8em;
+  border: 1px solid #ccc;
+  background: transparent;
+  font-weight: 100;
+  padding: 20px 0px;
+}
+
+
+h1 {
+  margin-left: 20px;
+  margin-bottom: 0px;
+  font-weight: 100;
+  font-size: 4.0em;
+  color: #474747;
+}
+
+p {
+  font-weight: 100;
+  font-size: 1.9em;
+}
+
+ol, ul li{
+  color: #000;	
+  font-weight: 100;
+  list-style: none;
+  padding-top: 20px;
+  font-size: 3.0em;
+}
+
+number {
+  color: #E8175D;
+  font-size: 0.6em; 
+  padding-left: 30px;
+}
+
+button {
+  width: 100%;
+  display: block;
+  margin-top: 20px;
+  font-size: 1.6em;
+  padding: 15px;
+  border: none;
+  color: #474747;
+}
+
+button:hover{
+  cursor: pointer;
+  color: white;
+  background-color: #474747;
+  border: none;
+}
+
+*:focus {
+    outline-color: #666;
+    outline-width: .8px;
+}
+
+button:focus{
+		color: white;
+ 	background-color: #474747;
+ 	outline: none;
+}
