@@ -4,7 +4,7 @@ $( document ).ready(function() {
   
   //throw error it's not a num, or if num > 1.3 million
   function checkError(n){
-    if ( !(n).match(/\d+/) || (n > 1300000) )  {
+    if ( !(n).match(/\d+/) || (n > 1300000) || (n <= 0) )  {
   	  console.log('error, not number!')
   	  $('input').val('').focus();
   	  $('#input').effect('shake');
