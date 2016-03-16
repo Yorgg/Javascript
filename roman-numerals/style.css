@@ -9,15 +9,6 @@ html {
 }
 
 
-/* media query */
-
-@media screen and (max-width: 900px) {
-  .input-holder, .results{
-  	width: 80%;
-  }
-}
-
-
 /* Containers */
 
 .container {
@@ -79,6 +70,7 @@ ol, ul li{
   list-style: none;
   padding-top: 20px;
   font-size: 3.0em;
+  padding: 20px;
 }
 
 num {
@@ -99,6 +91,7 @@ button {
   padding: 15px;
   border: none;
   color: #474747;
+  background-color: #fafafa;
 }
 
 button:hover{
@@ -117,4 +110,14 @@ button:focus{
 		color: white;
  	background-color: #474747;
  	outline: none;
+}
+
+
+/* media query */
+
+@media screen and (max-width: 900px) {
+  .input-holder, .results{
+  	width: 80%;
+  }
+  
 }
