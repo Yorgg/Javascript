@@ -112,6 +112,19 @@ button:focus{
  	outline: none;
 }
 
+.github {
+  position: fixed;
+  top:  20px;
+  left: 20px;
+  color: #999;
+}
+
+.github p { 
+  font-size:;
+  margin: 5px 5px;
+  font-size: 1.7em;
+}
+
 
 /* media query */
 
@@ -119,5 +132,5 @@ button:focus{
   .input-holder, .results{
   	width: 80%;
   }
-  
+
 }
